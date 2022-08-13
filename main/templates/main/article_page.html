@@ -1,0 +1,143 @@
+{% load static %}
+{% include 'main/header-authTrue.html' %}
+<div class="articles">
+    <div class="info2">
+        <p>Автор: блогер</p>
+        <p>Дата публикации: {{ post.publication_date }} </p>
+    </div>
+    <div class="article-text">
+        <h1>{{ post.title }}</h1>
+        <p>{{ post.text|safe }}
+    </div>
+    <div class="indicators">
+        <p> <img class="views" src="{% static 'main/icon/icon-eye.png' %}" alt="icon"> 0</p>
+        <p> <img class="icon-comments" src="{% static 'main/icon/chat-icon.png' %}" alt="icon">{{ post.comments_length }}</p>
+    </div>
+    <div class="article-image">
+        <img src="{{post.title_image.url}}" alt="Фотография статьи" width="100%" height="auto">
+    </div>
+    <div class="other-articles">
+        <div class="other-articles-content">
+            <p>Другие статьи</p>
+            <a href="#" class="view_all">Посмотреть все</a>
+        </div>
+        <div class="container-other-article">
+            {% for oa in other_article %}
+                <div class="other-article">
+                    <img src="{{ oa.title_image.url }}" alt="Фотография другой статьи">
+                    <div class="other-text">
+                        <a href="{% url 'article' oa.pk %}">{{ oa.text|truncatewords:10}}</a>
+                        <div class="indicators-other">
+                            <p class="views"><img src="{% static 'main/icon/icon-eye.png' %}" alt="иконка просмотров"> 0</p>
+                            <p class="icon-other-comments"><img src="{% static 'main/icon/chat-icon.png' %}" alt="иконка комментарий">{{ oa.comments_length }}</p>
+                        </div>
+                    </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="comments">
+            <h1>Комментарии</h1>
+        {% if request.user.is_authenticated %}
+            <form class="form_input" action="" method="post">
+                <input type="text" name="comment" minlength="5" required placeholder="Напишите комментарий">
+                <input type="submit" name="button" value="Отправить">
+                {% csrf_token %}
+                <input type="text" name="reply_id" value="0" style="display: none">
+            </form>
+            {% for comment in comments %}
+                <div class="comment">
+                {% for c in comment %}
+                    {% if c.parent_id == 0 %}
+                        <div class="comment">
+                            <h1>{{ c.comments_author }}</h1>
+                            <h2>{{ c.date_posted}}</h2>
+                            <p>{{ c.comment_text}}</p>
+                            <div class="reply" onclick="startAddInput(this)">
+                                <button id="{{ c.id }}"><img src="{% static 'main/icon/reply.png' %}" alt="reply">Ответить</button>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="comment comment_reply">
+                            <h1>{{ c.comments_author }}</h1>
+                            <h2>{{ c.date_posted}}</h2>
+                            <p>{{ c.comment_text}}</p>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+                </div>
+            {% endfor %}
+        {% else %}
+            <h1 class="noCom">Чтобы увидеть комментарии <a href="{% url 'auth' %}">авторизуйтесь</a> или <a href="{% url 'register' %}">зарегистрируйтесь</a></h1>
+        {% endif %}
+        </div>
+    </div>
+</div>
+<footer>
+    <p>©2021 by Воспитатель.ру</p>
+</footer>
+
+<script>
+    function addInput(e, callback) {
+        let f = document.createElement("form");
+        f.setAttribute('class', 'form_input')
+        f.setAttribute('method',"post");
+        f.setAttribute('id', e.firstElementChild.id);
+
+        let i = document.createElement("input");
+        i.type = "text";
+        i.placeholder = "Напишите комментарий";
+        i.name = "comment";
+        i.minLength = 5;
+        i.required = true;
+        i.id = e.firstElementChild.id;
+
+        let c = document.createElement("input");
+        c.type = "submit";
+        c.name = "button";
+        c.value = "Отправить";
+
+        let inv = document.createElement('input');
+        inv.type = "text";
+        inv.name = "reply_id";
+        inv.value = e.firstElementChild.id;
+        inv.style.display = 'none';
+
+        let a_name = document.createElement('input');
+        a_name.type = "text";
+        a_name.name = "author_name";
+        a_name.value = e.parentNode.firstElementChild.textContent;
+        a_name.style.display = 'none';
+
+        let token = document.createElement('input');
+        token.type = "hidden";
+        token.name = "csrfmiddlewaretoken";
+        token.value = "{{ csrf_token }}";
+        token.style.display = 'none';
+
+        f.appendChild(i);
+        f.appendChild(c);
+        f.appendChild(inv);
+        f.appendChild(a_name);
+        f.appendChild(token);
+        e.parentNode.parentNode.appendChild(f)
+        f.scrollIntoView({behavior: "smooth", block: 'center'})
+        setTimeout(() => e.style.display = "none", 200);
+        setTimeout(() => callback(), 500);
+    }
+
+    function startAddInput(e){
+        addInput(e, function (){
+            window.onclick = function(event) {
+                if (!e.parentNode.parentNode.contains(event.target)) {
+                    let reply = document.getElementsByClassName("reply");
+                    reply[0].style.display = "flex";
+                    if (e.parentNode.parentNode.lastChild.className === 'form_input'){
+                        e.parentNode.parentNode.lastChild.remove();
+                        e.style.display = "flex";
+                        window.onclick = null;
+                    }
+                }
+            };
+        });
+    }
+</script>

@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Воспитатель.ру</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+    <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+</head>
+<body>
+    <header>
+        <div class="company-name">
+            <a href="{% url 'home' %}"><img class="img1280plus" src="{% static 'main/img/logo.png' %}" alt="логотип"> <img class="img1280minus" src="{% static 'main/img/logo_mini.png' %}" alt="логотип"> </a>
+        </div>
+        <div class="hrefs">
+            <div class="dropdown">
+                <button onclick="myFunction()" class="dropbtn"><img id="down_arrow" src="{% static 'main/icon/down-arrow.png' %}" alt="стрелка вниз" style="width: calc(1em + 1vw); height: calc(1em + 1vw);"></button>
+                <div id="myDropdown" class="dropdown-content">
+                    <a href="{% url 'profile' %}">Профиль</a>
+                    <a href="{% url 'settings' %}">Настройки</a>
+                    <a href="{% url 'logout' %}">Выйти</a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <script>
+        function myFunction() {
+            document.getElementById("myDropdown").classList.toggle("show");
+        }
+
+        window.onclick = function(event) {
+            if (!event.target.matches('.dropbtn')) {
+                let dropdowns = document.getElementsByClassName("dropdown-content");
+                let i;
+                for (i = 0; i < dropdowns.length; i++) {
+                    let openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+    </script>

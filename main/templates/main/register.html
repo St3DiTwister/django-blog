@@ -1,0 +1,105 @@
+{% load static %}
+{#<!DOCTYPE html>#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title>Регистрация</title>#}
+{#    <meta name="viewport" content="width=device-width, initial-scale=1">#}
+{#    <link rel="stylesheet" href="{% static 'main/css/utils.css' %}">#}
+{#</head>#}
+{#<div class="form">#}
+{#    <div class="content_form">#}
+{#        <form action="" method="POST">#}
+{#            <h1 class="group">Регистрация</h1>#}
+{#            <p class="error">#}
+{#                            </p>#}
+{#            <div class="group">#}
+{#                <input name="mail" required>#}
+{#                <label>Почта:</label>#}
+{#            </div>#}
+{#            <div class="group">#}
+{#                <input name="birthday" type="text" onfocus="this.type='date'; this.max = '2004-12-31'; this.min = '1950-12-31'" onblur="#}
+{#                if(!this.value){this.type='text';}#}
+{#                let year = parseInt(this.value.slice(0,4));#}
+{#                if (year > 2004 || year < 1950){#}
+{#                    this.value = '';#}
+{#                    this.type='text';#}
+{#                }#}
+{#                " required>#}
+{#                <label>Дата рождения:</label>#}
+{#            </div>#}
+{#            <div class="group">#}
+{#                <input name="name" required>#}
+{#                <label>Имя</label>#}
+{#            </div>#}
+{#            <div class="group">#}
+{#                <input name="patronymic" required>#}
+{#                <label>Отчество</label>#}
+{#            </div>#}
+{#            <div class="group">#}
+{#                <input name="surname" required>#}
+{#                <label>Фамилия</label>#}
+{#            </div>#}
+{#            <div class="group">#}
+{#                <input name="password" type="password" required>#}
+{#                <label>Пароль:</label>#}
+{#            </div>#}
+{#            <div class="group">#}
+{#                <input name="confirm_password" type="password" required>#}
+{#                <label>Подтверждение пароля:</label>#}
+{#            </div>#}
+{#            <br><br>#}
+{#            <input class="group send" name="submit" type="submit" value="Отправить">#}
+{#        </form>#}
+{#        <a href="{% url 'home' %}" class="go_back" type="submit"> ← Вернуться на главную страницу</a>#}
+{#    </div>#}
+{#</div>#}
+
+
+
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'main/css/utils.css' %}">
+</head>
+<div class="form">
+    <div class="content_form">
+        <form action="" method="POST">
+            <h1 class="group">Регистрация</h1>
+            <div class="errors">
+                {% for f in form %}
+                    <p class="error">{{ f.errors.as_text|linebreaks }}</p>
+                {% endfor %}
+                <br>
+            </div>
+            {% csrf_token %}
+            <div class="group">
+                {{form.username}}
+                <label>Имя пользователя:</label>
+            </div>
+            <div class="group">
+                {{form.email}}
+                <label>Почта:</label>
+            </div>
+            <div class="group">
+                {{form.first_name}}
+                <label>Имя:</label>
+            </div>
+            <div class="group">
+                {{form.last_name}}
+                <label>Фамилия:</label>
+            </div>
+            <div class="group">
+                {{form.password1}}
+                <label>Пароль:</label>
+            </div>
+            <div class="group">
+                {{form.password2}}
+                <label>Подтверждение пароля:</label>
+            </div>
+            <input class="group send" name="submit" type="submit" value="Отправить">
+        </form>
+        <a href="{% url 'home' %}" class="go_back" type="submit"> ← Вернуться на главную страницу</a>
+    </div>
+</div>

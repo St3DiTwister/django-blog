@@ -1,0 +1,205 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Gilroy', serif;
+}
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.content_form {
+    margin-top: 7%;
+    text-align: center;
+}
+
+.content_form > form > h1 {
+    margin-bottom: 10%;
+}
+
+.error {
+    color: red;
+    font-size: 18px;
+    text-align: center;
+    margin-bottom: 5%;
+}
+
+.group {
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.group:last-child {
+    margin-bottom: 5%;
+}
+
+.go_back {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    font-size: calc(0.5em + 0.5vw);
+    color: #C2A082;
+    text-decoration: none;
+    border: none;
+    outline: none;
+    background: none;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.go_back:hover {
+    opacity: 50%;
+}
+.send {
+    display: flex;
+    font-style: normal;
+    font-weight: 600;
+    font-size: calc(0.1em + 1vw);
+    color: #FFFFFF;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    background: #C2A082;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.25);
+    border-radius: 15px;
+    margin-right: 8%;
+    transition: all 0.5s ease-in-out;
+}
+.send:hover {
+    background-color: wheat;
+    cursor: pointer;
+    color: black;
+}
+
+.register > a {
+    text-decoration: none;
+    position: relative;
+}
+
+
+.register > a:after {
+    display: block;
+    content: "";
+    background-color: #000;
+    height: 1px;
+    width: 0;
+    left: 50%;
+    position: absolute;
+    -webkit-transition: width .3s ease-in-out;
+    -moz-transition: width .3s ease-in-out;
+    transition: width .3s ease-in-out;
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    transform: translateX(-50%);
+}
+
+.register > a:hover:after,
+.register > a:focus:after {
+    width: 100%;
+}
+
+input {
+    font-size: 16px;
+    padding: 10px;
+    display: block;
+    width: 300px;
+    border: none;
+    border-bottom: 1px solid #ccc;
+}
+input:focus {
+    outline: none;
+}
+
+label {
+    color: #999;
+    font-size: 18px;
+    position: absolute;
+    pointer-events: none;
+    left: 10px;
+    top: 15px;
+    transition: 0.2s ease all;
+    -moz-transition: 0.2s ease all;
+    -webkit-transition: 0.2s ease all;
+}
+
+input:focus ~ label, input:valid ~ label {
+    top: -15px;
+    font-size: 14px;
+    color: #5264AE;
+}
+
+
+.bar {
+    position: relative;
+    display: block;
+    width: 320px;
+}
+.bar:before, .bar:after {
+    content: "";
+    height: 2px;
+    width: 0;
+    bottom: 0;
+    position: absolute;
+    background: #5264AE;
+    transition: 0.2s ease all;
+    -moz-transition: 0.2s ease all;
+    -webkit-transition: 0.2s ease all;
+}
+.bar:before {
+    left: 50%;
+}
+.bar:after {
+    right: 50%;
+}
+
+input:focus ~ .bar:before,
+input:focus ~ .bar:after {
+    width: 50%;
+}
+
+.register {
+    margin-top: 5%;
+    font-size: 18px;
+}
+
+.checkbox {
+    display: flex;
+}
+
+.checkbox > input {
+    padding: 0;
+    position: absolute;
+    top: 10%;
+    right: 20%;
+}
+
+@media (min-width: 768px) and (max-width: 1215px){
+    .go_back {
+        font-size: 16px;
+    }
+
+    .send {
+        font-size: 16px;
+    }
+
+    .register > a {
+        font-weight: 600;
+    }
+}
+
+@media (min-width: 320px) and (max-width: 767px) {
+
+    .go_back {
+        font-size: 16px;
+    }
+
+    .send {
+        font-size: 16px;
+    }
+
+    .register > a {
+        font-weight: 600;
+    }
+}

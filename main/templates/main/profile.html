@@ -1,0 +1,22 @@
+{% load static %}
+{% if request.user.is_authenticated %}
+    {% include 'main/header-authTrue.html' %}
+{% else %}
+    {% include 'main/header-authFalse.html' %}
+{% endif %}
+<div class="profile">
+    <div class="profile-box">
+        <div class="profile-row">
+            <p>Логин<br><b>{{ user.username }}</b></p>
+            <p><a href="{% url 'settings' %}"><img src="{% static 'main/icon/settings.svg' %}" class="profile-icon"></a></p>
+        </div>
+        <div class="profile-row">
+            <p>Имя<br> <b>{{ user.first_name }}</b></p>
+            <p>Почта<br> <b>{{ user.email }}</b></p>
+        </div>
+        <div class="profile-row">
+            <p>Фамилия<br><b>{{ user.last_name }}</b></p>
+            <p>Дата регистрации <br><b>{{ user.date_joined }}</b></p>
+        </div>
+    </div>
+</div>

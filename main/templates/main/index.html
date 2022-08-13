@@ -1,0 +1,48 @@
+{% load static %}
+{% if request.user.is_authenticated %}
+    {% include 'main/header-authTrue.html' %}
+{% else %}
+    {% include 'main/header-authFalse.html' %}
+{% endif %}
+    <div class="main">
+        <h1 class="c768">Добро пожаловать на<br>Воспитатель.ру</h1>
+        <h2 class="c768" style="margin-top: 15px; padding-left: 5px;">Воспитываем любя</h2>
+    </div>
+    <div class="articles">
+        <a href="#">Все статьи</a>
+        {% for p in posts %}
+            <div class="article">
+                <div class="article_image">
+                    <img src="{{ p.title_image.url }}" alt="Фотография статьи" class="image_in_article">
+                </div>
+                <div class="article_content">
+                    <div class="info">
+                        <p class="Author">Автор: блогер</p>
+                        <p class="date_publication">{{ p.publication_date }}</p>
+                    </div>
+                    <p class="article_title"><a href="{% url 'article' p.pk %}">{{p.title}}</a></p>
+                    <p class="article_text">{{ p.text|truncatewords:50}}</p>
+                    <div class="indicators">
+                        <p> <img class="views" src="{% static 'main/icon/icon-eye.png' %}" alt="icon"> 0</p>
+                        <p> <img class="icon-comments" src="{% static 'main/icon/chat-icon.png' %}" alt="icon">{{ p.comments_length }}</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <nav class="list-pages">
+        <ul>
+            {% for p in posts.paginator.page_range %}
+                    {% if posts.number == p %}
+                        <li class="page-num page-num-selected">{{ p }}</li>
+                    {% else %}
+                        <li class="page-num">
+                            <a href="?page={{ p }}">{{ p }}</a>
+                        </li>
+                    {% endif %}
+            {% endfor %}
+        </ul>
+    </nav>
+    <footer>
+        <p>©2021 by Воспитатель.ру</p>
+    </footer>

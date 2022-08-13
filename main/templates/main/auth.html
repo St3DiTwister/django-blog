@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>Авторизация</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'main/css/utils.css' %}">
+</head>
+<div class="form">
+    <div class="content_form">
+        <form action="" method="POST">
+            <h1 class="group">Авторизация</h1>
+            <p class="error">
+                {% if form.non_field_errors %}
+                    {{'Неверный логин или пароль'}}
+                {% endif %}
+            </p>
+            <br>
+            {% csrf_token %}
+            <div class="group">
+                {{form.username}}
+                <label>Имя пользователя:</label>
+            </div>
+            <div class="group">
+                {{form.password}}
+                <label>Пароль:</label>
+            </div>
+            <div class="group checkbox">
+                Запомнить?
+                <input type="checkbox" id="checkbox" name="checkbox" checked="">
+            </div>
+            <input class="group send" name="submit" type="submit" value="Отправить">
+        </form>
+        <p class="register">Не зарегистрированы? <a href="{% url 'register' %}"> Регистрация</a></p>
+        <a href="{% url 'home' %}" class="go_back" type="submit"> ← Вернуться на главную страницу</a>
+    </div>
+</div>
